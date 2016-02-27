@@ -5,7 +5,7 @@
     using System.Linq;
     using Models;
     using StudentSystem.Models;
-    using System;
+
     public class StudentsController : ApiController
     {
         private IStudentSystemData db;
@@ -29,13 +29,8 @@
 
 
         [HttpGet]
-        public IHttpActionResult GetById(int? id)
+        public IHttpActionResult GetById(int id)
         {
-            if (id == null)
-            {
-                return this.BadRequest("The parameter for Id cannot be null");
-            }
-
             var student = db.Students
                 .SearchFor(st => st.StudentIdentification == id)
                 .FirstOrDefault();
@@ -67,17 +62,12 @@
 
             model.Id = newStudent.StudentIdentification;
 
-            return this.Ok(newStudent);
+            return this.Created(this.Url.ToString(), newStudent);
         }
 
         [HttpPut]
-        public IHttpActionResult Update(int? id, [FromBody] StudentModel model)
+        public IHttpActionResult Update(int id, [FromBody] StudentModel model)
         {
-            if (id == null)
-            {
-                return this.BadRequest("The parameter for Id cannot be null");
-            }
-
             var studentForUpdate = db
                 .Students
                 .SearchFor(st => st.StudentIdentification == id)
@@ -104,13 +94,8 @@
         }
 
         [HttpDelete]
-        public IHttpActionResult Delete(int? id)
+        public IHttpActionResult Delete(int id)
         {
-            if (id == null)
-            {
-                return this.BadRequest("The parameter for ID cannot be null");
-            }
-
             var studentForDelete = db
                 .Students
                 .SearchFor(st => st.StudentIdentification == id)
@@ -126,6 +111,5 @@
 
             return this.Ok(studentForDelete);
         }
-        
     }
 }

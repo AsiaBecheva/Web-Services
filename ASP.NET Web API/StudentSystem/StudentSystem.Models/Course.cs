@@ -9,12 +9,11 @@
     {
         public Course()
         {
-            this.Id = Guid.NewGuid();
             this.Students = new HashSet<Student>();
             this.Homeworks = new HashSet<Homework>();
         }
 
-        public Guid Id { get; set; }
+        public int Id { get; set; }
 
         [Column("CourseName")]
         public string Name { get; set; }
