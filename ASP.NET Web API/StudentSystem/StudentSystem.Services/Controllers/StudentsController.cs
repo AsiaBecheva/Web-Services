@@ -33,7 +33,7 @@
         {
             if (id == null)
             {
-                return this.BadRequest("The parameter for ID cannot be null");
+                return this.BadRequest("The parameter for Id cannot be null");
             }
 
             var student = db.Students
@@ -42,7 +42,7 @@
 
             if (student == null)
             {
-                return this.BadRequest("There is no student with this ID");
+                return this.BadRequest("There is no student with this Id");
             }
 
             return this.Ok(student);
@@ -71,12 +71,61 @@
         }
 
         [HttpPut]
-        public IHttpActionResult Update(int? id, StudentModel model)
+        public IHttpActionResult Update(int? id, [FromBody] StudentModel model)
         {
-            throw new NotImplementedException();
+            if (id == null)
+            {
+                return this.BadRequest("The parameter for Id cannot be null");
+            }
+
+            var studentForUpdate = db
+                .Students
+                .SearchFor(st => st.StudentIdentification == id)
+                .FirstOrDefault();
+
+            if (studentForUpdate == null)
+            {
+                return this.BadRequest("There is no student with this Id");
+            }
+            else if (!ModelState.IsValid)
+            {
+                return this.BadRequest(ModelState);
+            }
+            else
+            {
+                studentForUpdate.FirstName = model.FirstName;
+                studentForUpdate.LastName = model.LastName;
+                studentForUpdate.Level = model.Level;
+
+                this.db.SaveChanges();
+
+                return this.Ok();
+            }
         }
 
-        
+        [HttpDelete]
+        public IHttpActionResult Delete(int? id)
+        {
+            if (id == null)
+            {
+                return this.BadRequest("The parameter for ID cannot be null");
+            }
+
+            var studentForDelete = db
+                .Students
+                .SearchFor(st => st.StudentIdentification == id)
+                .FirstOrDefault();
+
+            if (studentForDelete == null)
+            {
+                return this.BadRequest("There is no student with this Id");
+            }
+
+            this.db.Students.Delete(studentForDelete);
+            db.SaveChanges();
+
+            return this.Ok(studentForDelete);
+        }
         
     }
 }
