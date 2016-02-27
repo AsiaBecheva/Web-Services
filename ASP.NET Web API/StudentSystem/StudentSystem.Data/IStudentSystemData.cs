@@ -5,6 +5,8 @@
 
     public interface IStudentSystemData
     {
+        IGenericRepository<Homework> Homework { get; }
+
         IGenericRepository<Course> Courses { get; }
 
         StudentsRepository Students { get; }

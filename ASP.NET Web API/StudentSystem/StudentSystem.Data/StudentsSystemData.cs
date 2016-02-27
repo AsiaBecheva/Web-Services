@@ -15,6 +15,14 @@
         {
         }
 
+        public IGenericRepository<Homework> Homework
+        {
+            get
+            {
+                return this.GetRepository<Homework>();
+            }
+        }
+
         public IGenericRepository<Course> Courses
         {
             get

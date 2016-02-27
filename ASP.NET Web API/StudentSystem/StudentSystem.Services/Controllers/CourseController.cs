@@ -36,14 +36,14 @@
 
             if (course == null)
             {
-                return this.BadRequest("There is no student with this Id");
+                return this.BadRequest("There is no course with this Id");
             }
 
             return this.Ok(course);
         }
 
         [HttpPost]
-        public IHttpActionResult Post([FromBody] CourseModel model)
+        public IHttpActionResult Create([FromBody] CourseModel model)
         {
             if (!ModelState.IsValid)
             {
