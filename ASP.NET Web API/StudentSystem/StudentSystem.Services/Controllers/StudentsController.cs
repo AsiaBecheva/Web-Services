@@ -9,11 +9,7 @@
     public class StudentsController : ApiController
     {
         private IStudentSystemData db;
-
-        public StudentsController() : this(new StudentsSystemData())
-        {
-        }
-
+        
         public StudentsController(IStudentSystemData db)
         {
             this.db = db;
