@@ -10,7 +10,5 @@
         IDbSet<Album> Albums { get; set; }
 
         IDbSet<Artist> Artists { get; set; }
-
-        void SaveChanges();
     }
 }

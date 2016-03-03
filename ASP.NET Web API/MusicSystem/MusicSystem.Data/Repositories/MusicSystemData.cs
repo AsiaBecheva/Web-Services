@@ -8,7 +8,9 @@
     public class MusicSystemData : IMusicSystemData
     {
         private DbContext context;
-        private Dictionary<Type, object> repositories;
+        private IDictionary<Type, object> repositories;
+
+        
 
         public MusicSystemData()
         {
@@ -16,15 +18,7 @@
             this.repositories = new Dictionary<Type, object>();
         }
 
-        IGenericRepository<Album> IMusicSystemData.Albums
-        {
-            get
-            {
-                return this.GetRepository<Album>();
-            }
-        }
-
-        IGenericRepository<Artist> IMusicSystemData.Artists
+        public IGenericRepository<Artist> Artists
         {
             get
             {
@@ -32,7 +26,15 @@
             }
         }
 
-        IGenericRepository<Song> IMusicSystemData.Songs
+        public IGenericRepository<Album> Albums
+        {
+            get
+            {
+                return this.GetRepository<Album>();
+            }
+        }
+
+        public IGenericRepository<Song> Songs
         {
             get
             {
@@ -44,6 +46,7 @@
         {
             return this.context.SaveChanges();
         }
+
 
         private IGenericRepository<T> GetRepository<T>() where T : class
         {
